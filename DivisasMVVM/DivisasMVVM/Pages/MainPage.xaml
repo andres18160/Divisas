@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:DivisasMVVM.Controls"
+             x:Class="DivisasMVVM.Pages.MainPage"
+             Title="Divisas"             
+             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+    <StackLayout
+            Padding="8">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/><!-- EL COMODIN * QUIERE DECIR QUE TODAS LAS FILAS VAN A TENER EL MISMO TAMAÑO  -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width=".5*"/>
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                VerticalOptions="Center"
+                Text="Amount:">
+            </Label>
+            <Entry
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Keyboard="Numeric"
+                Text="{Binding Amount,Mode=TwoWay}"
+                Placeholder="Enter an amount">
+            </Entry>
+
+            <Label
+                 Grid.Column="0"
+                 Grid.Row="1"
+                 VerticalOptions="Center"
+                 Text="Source currency:">
+            </Label>
+            <control:BindablePicker
+                  Grid.Column="1"
+                  Grid.Row="1"
+                  Title="Select source currency..."
+                  DisplayMemberPath="Code"
+                  SelectedValuePath="TaxRate"
+                  ItemsSource="{Binding Rates}"
+                  SelectedValue ="{Binding Path=SourceRate, Mode=TwoWay}"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="Center">
+            </control:BindablePicker>
+            <Label
+                  Grid.Column="0"
+                  Grid.Row="2"
+                  VerticalOptions="Center"
+                  Text="Target currency:">
+            </Label>
+            <control:BindablePicker
+                  Grid.Column="1"
+                  Grid.Row="2"
+                  Title="Select target currency..."
+                  DisplayMemberPath="Code"
+                  SelectedValuePath="TaxRate"
+                  ItemsSource="{Binding Rates}"
+                  SelectedValue ="{Binding Path=TargetRate, Mode=TwoWay}"
+                  HorizontalOptions="FillAndExpand"
+                  VerticalOptions="Center">
+            </control:BindablePicker>
+            <Image
+                Source="swich.png"
+                Grid.Column="2"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                HeightRequest="40"
+                WidthRequest="40">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SwithcCommand}"/>
+                </Image.GestureRecognizers>               
+            </Image>
+        </Grid>
+            
+      
+        
+ 
+        
+       
+        <Button
+          Command="{Binding ConvertCommand}"
+          IsEnabled="{Binding IsEnabled}"
+          Text="Convert"
+          BackgroundColor="Navy"
+          TextColor="White"
+          HeightRequest="40"
+          BorderRadius="20">
+        </Button>
+        <ActivityIndicator
+              IsRunning="{Binding IsRunning}">
+        </ActivityIndicator>
+        <Label
+          Text="{Binding Message}"
+          BackgroundColor="Silver"
+          TextColor="Purple"
+          FontAttributes="Bold"
+          HorizontalTextAlignment="Center"
+          VerticalTextAlignment="Center"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        </Label>
+    </StackLayout>
+</ContentPage>
+
